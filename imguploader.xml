@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="plugin" group="content" method="upgrade">
+	<name>plg_content_imguploader</name>
+	<author>Rick Spaan</author>
+	<creationDate>Feb 2016</creationDate>
+	<copyright>Copyright (C) 2016 Rick Spaan. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>rick@r2h.nl</authorEmail>
+	<authorUrl>www.r2h.nl</authorUrl>
+	<version>1.0.0</version>
+	<description>PLG_CONTENT_IMGUPLOADER_INSTALLATION</description>
+	<files>
+		<filename plugin="imguploader">imguploader.php</filename>
+	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.plg_content_imguploader.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_content_imguploader.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="note1" type="note" label="PLG_CONTENT_IMGUPLOADER_NOTE1" description="" />
+				<field name="folder"
+				       type="text"
+				       default=""
+				       description="PLG_CONTENT_IMGUPLOADER_FOLDER_DESC"
+				       label="PLG_CONTENT_IMGUPLOADER_FOLDER_LABEL"
+				       filter="word"
+				>
+				</field>
+                <field name="datefolders"
+                       type="radio"
+                       class="btn-group btn-group-yesno"
+                       default="0"
+                       label="PLG_CONTENT_IMGUPLOADER_DATEFOLDER_LABEL"
+                       description="PLG_CONTENT_IMGUPLOADER_DATEFOLDER_DESC"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+				<field name="maxwidth"
+				       type="number"
+				       default="600"
+				       description="PLG_CONTENT_IMGUPLOADER_MAXWIDTH_DESC"
+				       label="PLG_CONTENT_IMGUPLOADER_MAXWIDTH_LABEL"
+				       filter="integer"
+				>
+				</field>
+				<field name="quality"
+				       type="number"
+				       default="75"
+				       description="PLG_CONTENT_IMGUPLOADER_QUALITY_DESC"
+				       label="PLG_CONTENT_IMGUPLOADER_QUALITY_LABEL"
+				       filter="integer"
+				>
+				</field>
+				<field name="passthrough"
+				       type="text"
+				       default="raw"
+				       description="PLG_CONTENT_IMGUPLOADER_PASSTHROUGH_DESC"
+				       label="PLG_CONTENT_IMGUPLOADER_PASSTHROUGH_LABEL"
+				       filter="word"
+				>
+				</field>
+				<field type="spacer"/>
+				<field name="note2" type="note" label="PLG_CONTENT_IMGUPLOADER_NOTE2" description="" />
+				<field name="generatethumbs"
+                       type="radio"
+                       class="btn-group btn-group-yesno"
+                       default="0"
+                       label="PLG_CONTENT_IMGUPLOADER_GENERATETHUMBS_LABEL"
+                       description="PLG_CONTENT_IMGUPLOADER_GENERATETHUMBS_DESC"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="thumbsfolders"
+                       type="radio"
+                       class="btn-group btn-group-yesno"
+                       default="1"
+                       label="PLG_CONTENT_IMGUPLOADER_THUMBSFOLDER_LABEL"
+                       description="PLG_CONTENT_IMGUPLOADER_THUMBSFOLDER_DESC"
+					   showon="generatethumbs:1"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="generatemethod"
+                       type="list"
+                       default="Image::CROP_RESIZE"
+                       label="PLG_CONTENT_IMGUPLOADER_GENERATEMETHOD_LABEL"
+                       description="PLG_CONTENT_IMGUPLOADER_GENERATEMETHOD_DESC"
+					   showon="generatethumbs:1"
+                >
+                    <option value="CROP_RESIZE">PLG_CONTENT_IMGUPLOADER_THUMB_GENERATE_LABEL1</option>
+                    <option value="SCALE_FILL">PLG_CONTENT_IMGUPLOADER_THUMB_GENERATE_LABEL2</option>
+                    <option value="SCALE_INSIDE">PLG_CONTENT_IMGUPLOADER_THUMB_GENERATE_LABEL3</option>
+                    <option value="SCALE_OUTSIDE">PLG_CONTENT_IMGUPLOADER_THUMB_GENERATE_LABEL4</option>
+                    <option value="SCALE_FIT">PLG_CONTENT_IMGUPLOADER_THUMB_GENERATE_LABEL5</option>
+					<option value="CROP">PLG_CONTENT_IMGUPLOADER_THUMB_GENERATE_LABEL6</option>
+                </field>
+                <field name="thumb1"
+                       type="text"
+                       default="160x120"
+                       description="PLG_CONTENT_IMGUPLOADER_THUMB_DESC"
+                       label="PLG_CONTENT_IMGUPLOADER_THUMB_LABEL1"
+					   showon="generatethumbs:1"
+                >
+                </field>
+                <field name="thumb2"
+                       type="text"
+                       default=""
+                       description="PLG_CONTENT_IMGUPLOADER_THUMB_DESC"
+                       label="PLG_CONTENT_IMGUPLOADER_THUMB_LABEL2"
+					   showon="generatethumbs:1"
+                >
+                </field>
+                <field name="thumb3"
+                       type="text"
+                       default=""
+                       description="PLG_CONTENT_IMGUPLOADER_THUMB_DESC"
+                       label="PLG_CONTENT_IMGUPLOADER_THUMB_LABEL3"
+					   showon="generatethumbs:1"
+                >
+                </field>
+                <field name="thumb4"
+                       type="text"
+                       default=""
+                       description="PLG_CONTENT_IMGUPLOADER_THUMB_DESC"
+                       label="PLG_CONTENT_IMGUPLOADER_THUMB_LABEL4"
+					   showon="generatethumbs:1"
+                >
+                </field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
