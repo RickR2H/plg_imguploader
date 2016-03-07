@@ -38,6 +38,18 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
+                <field name="datefolderformat"
+                       type="list"
+                       default="Y"
+                       label="PLG_CONTENT_IMGUPLOADER_FOLDERFORMAT_LABEL"
+                       description="PLG_CONTENT_IMGUPLOADER_FOLDERFORMAT_DESC"
+                       showon="datefolders:1"
+                >
+                    <option value="1">Y</option>
+                    <option value="2">Y/M</option>
+                    <option value="3">Y/M/D</option>
+                </field>
+
 				<field name="maxwidth"
 				       type="number"
 				       default="600"
@@ -46,6 +58,14 @@
 				       filter="integer"
 				>
 				</field>
+                <field name="maxheight"
+                       type="number"
+                       default="600"
+                       description="PLG_CONTENT_IMGUPLOADER_MAXHEIGHT_DESC"
+                       label="PLG_CONTENT_IMGUPLOADER_MAXHEIGHT_LABEL"
+                       filter="integer"
+                >
+                </field>
 				<field name="quality"
 				       type="number"
 				       default="75"
