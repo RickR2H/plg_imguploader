@@ -66,23 +66,53 @@ class PlgContentImguploader extends JPlugin
 				mkdir(rtrim($basePath, "/"));
 			}
 
-			if (!is_dir($basePath . $year))
+			if ($this->params->get('datefolderformat') == 1)
 			{
-				mkdir($basePath . $year);
+				if (!is_dir($basePath . $year))
+				{
+					mkdir($basePath . '/' . $year);
+				}
+
+				// Update the object to the new path
+				$object_file->filepath = $basePath . $year . '/' . $object_file->name;
 			}
 
-			if (!is_dir($basePath . $year . '/' . $month))
+			if ($this->params->get('datefolderformat') == 2)
 			{
-				mkdir($basePath . $year . '/' . $month);
+				if (!is_dir($basePath . $year))
+				{
+					mkdir($basePath . '/' . $year);
+				}
+
+				if (!is_dir($basePath . $year . '/' . $month))
+				{
+					mkdir($basePath . $year . '/' . $month);
+				}
+
+				// Update the object to the new path
+				$object_file->filepath = $basePath . $year . '/' . $month . '/' . $object_file->name;
 			}
 
-			if (!is_dir($basePath . $year . '/' . $month . '/' . $day))
+			if ($this->params->get('datefolderformat') == 3)
 			{
-				mkdir($basePath . $year . '/' . $month . '/' . $day);
-			}
+				if (!is_dir($basePath . $year))
+				{
+					mkdir($basePath . '/' . $year);
+				}
 
-			// Update the object to the new path
-			$object_file->filepath = $basePath . $year . '/' . $month . '/' . $day . '/' . $object_file->name;
+				if (!is_dir($basePath . $year . '/' . $month))
+				{
+					mkdir($basePath . $year . '/' . $month);
+				}
+
+				if (!is_dir($basePath . $year . '/' . $month . '/' . $day))
+				{
+					mkdir($basePath . $year . '/' . $month . '/' . $day);
+				}
+
+				// Update the object to the new path
+				$object_file->filepath = $basePath . $year . '/' . $month . '/' . $day . '/' . $object_file->name;
+			}
 		}
 		else
 		{
@@ -105,15 +135,15 @@ class PlgContentImguploader extends JPlugin
 	public function onContentAfterSave($context,  &$object_file)
 	{
 		// Are we in the right context?
-		if ($context != 'com_media.file')
+		if ($context != 'com_media.file' || $context == 'com_jce')
 		{
 			return;
 		}
 
 		$file = pathinfo($object_file->filepath);
 
-		// Skip if the pass through keyword is set
-		if (!preg_match('/'. $this->params->get('passthrough') . '_/', $file['filename']))
+		// Skip if the pass through keyword is set and present in the file name
+		if (strpos($file['filename'], $this->params->get('passthrough')) == false)
 		{
 
 			// Check if file exist
@@ -133,33 +163,34 @@ class PlgContentImguploader extends JPlugin
 			// Get the properties
 			$properties = $image->getImageFileProperties($object_file->filepath);
 
-			// Skip if the width is less or equal to the required
-			if ($properties->width <= $this->params->get('maxwidth'))
-			{
-				return;
-			}
-
-			// Get the image type
+			// Check if the image type is jpg, gif, png or return
 			if (preg_match('/jp(e)g/', mb_strtolower($properties->mime)))
 			{
 				$imageType = 'IMAGETYPE_JPEG';
 			}
-
-			if (preg_match('/gif/', mb_strtolower($properties->mime)))
+			elseif (preg_match('/gif/', mb_strtolower($properties->mime)))
 			{
 				$imageType = 'IMAGETYPE_GIF';
 			}
 
-			if (preg_match('/png/', mb_strtolower($properties->mime)))
+			elseif (preg_match('/png/', mb_strtolower($properties->mime)))
 			{
 				$imageType = 'IMAGETYPE_PNG';
 			}
+			else
+			{
+				return;
+			}
 
-			// Resize the image
-			$image->resize($this->params->get('maxwidth'), '', false);
+			// Skip if the width is less or equal to the required
+			if ($properties->width > $this->params->get('maxwidth') || $properties->height > $this->params->get('maxheight'))
+			{
+				// Resize the image
+				$image->resize($this->params->get('maxwidth'), $this->params->get('maxheight'), false, JImage::SCALE_INSIDE);
 
-			// Overwrite the file
-			$image->toFile($object_file->filepath, $imageType, array('quality' => $this->params->get('quality')));
+				// Overwrite the file
+				$image->toFile($object_file->filepath, $imageType, array('quality' => $this->params->get('quality')));
+			}
 
 			if ($this->params->get('generatethumbs',0) == true )
 			{
