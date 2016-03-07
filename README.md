@@ -6,7 +6,7 @@ This plugin enables the upload and storage of images in a folder structure like:
 
 Functions:
 
-*It resizes the image to a max width or max height specified in the plugin
-*Creates a maximum of 4 thumbnails in the current image location or in a thumbs folder
-*Use the pass through word filter to let the plugin ignore the file
-*Possible to auto create Year, Mounth or Day folders for the uploaded image
+* It resizes the image to a max width or max height specified in the plugin
+* Creates a maximum of 4 thumbnails in the current image location or in a thumbs folder
+* Use the pass through word filter to let the plugin ignore the file
+* Possible to auto create Year, Mounth or Day folders for the uploaded image
