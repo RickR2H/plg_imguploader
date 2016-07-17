@@ -26,7 +26,7 @@ class PlgContentImguploader extends JPlugin
 	 *
 	 * @return  object  The file object.
 	 */
-	public function onContentBeforeSave($context,  &$object_file)
+	public function onContentBeforeSave($context, $object_file)
 	{
 		// Are we in the right context?
 		if ($context != 'com_media.file')
